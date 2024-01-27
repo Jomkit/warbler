@@ -1,0 +1,124 @@
+ {% macro new_msg_modal(text) %} 
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ text }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-half"></div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{# {% macro form-1 %}
+
+  {% for field in form if field.widget.input_type != 'hidden' %}
+    {% for error in field.errors %}
+      <span class="text-danger">{{ error }}</span>
+    {% endfor %}
+    {{ field(placeholder=field.label.text, class="form-control") }}
+  {% endfor %}
+
+{% endmacro %}
+
+{% macro form-pw %}
+
+<p>To confirm changes, enter your password:</p>
+{% if form.password.errors %}
+  {% for error in form.password.errors %}
+    <span class="text-danger">
+    {{ error }}
+  </span>
+  {% endfor %}
+{% endif %}
+{{ form.password(placeholder="Enter your password to confirm", class="form-control") }}
+
+{% endmacro %}
+
+{% macro gen_form(form) %}
+<form method="POST" id="user_form">
+      {{ form.hidden_tag() }}
+
+      <button class="btn btn-primary btn-lg btn-block">Sign me up!</button>
+    </form>
+{% endmacro %} #}
+
+{% macro user_stats(user) %}
+<ul class="user-stats nav nav-pills">
+          <li class="stat">
+            <p class="small">Messages</p>
+            <h4>
+              <a href="/users/{{ user.id }}">{{ user.messages | length }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Following</p>
+            <h4>
+              <a href="/users/{{ user.id }}/following">{{ user.following | length }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Followers</p>
+            <h4>
+              <a href="/users/{{ user.id }}/followers">{{ user.followers | length }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Likes</p>
+            <h4>
+              <a href="/users/{{ user.id }}/likes">{{ user.likes | length }}</a>
+            </h4>
+          </li>
+          <div class="ml-auto">
+            {% if g.user.id == user.id %}
+            <a href="/users/profile" class="btn btn-outline-secondary">Edit Profile</a>
+            <form method="POST" action="/users/delete" class="form-inline">
+              <button class="btn btn-outline-danger ml-2">Delete Profile</button>
+            </form>
+            {% elif g.user %}
+            {% if g.user.is_following(user) %}
+            <form method="POST" action="/users/stop-following/{{ user.id }}">
+              <button class="btn btn-primary">Unfollow</button>
+            </form>
+            {% else %}
+            <form method="POST" action="/users/follow/{{ user.id }}">
+              <button class="btn btn-outline-primary">Follow</button>
+            </form>
+            {% endif %}
+            {% endif %}
+          </div>
+        </ul>
+{% endmacro %}
+
+{% macro cards(who) %}
+<div class="col-lg-4 col-md-6 col-12">
+    <div class="card user-card">
+    <div class="card-inner">
+        <div class="image-wrapper">
+        <img src="{{ who.header_image_url }}" alt="" class="card-hero">
+        </div>
+        <div class="card-contents">
+        <a href="/users/{{ who.id }}" class="card-link">
+            <img src="{{ who.image_url }}" alt="Image for {{ who.username }}" class="card-image">
+            <p>@{{ who.username }}</p>
+        </a>
+
+        {% if g.user.is_following(who) %}
+            <form method="POST"
+                action="/users/stop-following/{{ who.id }}">
+            <button class="btn btn-primary btn-sm">Unfollow</button>
+            </form>
+        {% else %}
+            <form method="POST" action="/users/follow/{{ who.id }}">
+            <button class="btn btn-outline-primary btn-sm">Follow</button>
+            </form>
+        {% endif %}
+
+        </div>
+        <p class="card-bio">{{ who.bio }}</p>
+    </div>
+    </div>
+</div>
+{% endmacro %}

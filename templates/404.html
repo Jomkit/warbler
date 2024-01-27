@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-9 bg-body rounded">
+        <h3 class="display-3 text-bold text-center mt-3">{{ e.get_response().status }}</h3>
+            <div class="container container-fluid">
+            <p>Whoops, looks like the user or message you're looking for isn't here.</p>    
+            <p>Let's go back <a href="/users">home</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

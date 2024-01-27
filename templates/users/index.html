@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row justify-content-end">
+      <div class="col-sm-9">
+        <div class="row">
+
+          {% from 'macros.html' import cards %}
+          {% for user in users %}
+            {{ cards(user) }}
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+{% endblock %}

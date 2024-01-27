@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="row">
+
+    <aside class="col-md-4 col-lg-3 col-sm-12" id="home-aside">
+      <div class="card user-card">
+        <div>
+          <div class="image-wrapper">
+            <img src="{{ g.user.header_image_url }}" alt="" class="card-hero">
+          </div>
+          <a href="/users/{{ g.user.id }}" class="card-link">
+            <img src="{{ g.user.image_url }}"
+                 alt="Image for {{ g.user.username }}"
+                 class="card-image">
+            <p>@{{ g.user.username }}</p>
+          </a>
+          
+        {% from 'macros.html' import user_stats %}
+        {{ user_stats(g.user) }}
+        </div>
+      </div>
+    </aside>
+
+    <div class="col-lg-6 col-md-8 col-sm-12">
+      <ul class="list-group" id="messages">
+        {% for message in messages %}
+          
+          {% include '/messages/message.html' %}
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+{% endblock %}

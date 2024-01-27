@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-4">
+      <h2 class="join-message">New Password</h2>
+      <form method="POST" id="user_form">
+        {{ form.hidden_tag() }}
+
+        {% if form.password.errors %}
+          {% for error in form.password.errors %}
+            <span class="text-danger">
+            {{ error }}
+          </span>
+          {% endfor %}
+        {% endif %}
+        {{ form.password(placeholder="Current password", class="form-control") }}
+
+        {% if form.new_password.errors %}
+          {% for error in form.new_password.errors %}
+            <span class="text-danger">
+            {{ error }}
+          </span>
+          {% endfor %}
+        {% endif %}
+        {{ form.new_password(placeholder="New password", class="form-control") }}
+
+        {% if form.confirm_password.errors %}
+          {% for error in form.confirm_password.errors %}
+            <span class="text-danger">
+            {{ error }}
+          </span>
+          {% endfor %}
+        {% endif %}
+        {{ form.confirm_password(placeholder="Re-enter new password", class="form-control") }}
+
+        <div class="edit-btn-area">
+          <button class="btn btn-primary">Change Password</button>
+          <a href="/users/{{ user_id }}" class="btn btn-outline-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

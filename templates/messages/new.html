@@ -1,0 +1,25 @@
+  <div class="row justify-content-center">
+    <div class="col">
+
+      <form id="new-msg-form" method="POST">
+        {{ form.csrf_token }}
+        <div class="modal-body">
+          {% if form.text.errors %}
+            {% for error in form.text.errors %}
+              <span class="text-danger">
+            {{ error }}
+          </span>
+            {% endfor %}
+          {% endif %}
+          {{ form.text(placeholder="What's happening?", id="new-msg-txt", class="form-control", rows="3") }}
+        </div>
+        <div class="modal-footer">
+          <button id="submit-new-post" class="btn btn-outline-success btn-block">Add my message!</button>
+          <button type="button" class="btn btn-secondary" id="close-new-msg-form" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+      
